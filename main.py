@@ -51,7 +51,7 @@ card = Card(('King', 'clubs'))
 # A lot of work is needed
 
 
-
+asdfghjkl;'
 
 
 
