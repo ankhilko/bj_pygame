@@ -99,6 +99,16 @@ heart = ((x, y),
          (x+35, y-50), (x+5, y-15), (x+0, y-15), (x-10, y-15), (x-10, y-5), (x-10, y+5), (x-10, y+15))
 
 
+x = 0
+y = 0
+s = 1
+nit = ((x, y), (x-10*s, y-10*s), (x-20*s, y-10*s), 
+(x-30*s, y), (x-30*s, y+20*s), (x-20*s, y+40*s), 
+(x, y+60*s), (x+20*s, y+40*s), (x+30*s, y+20*s), 
+(x+30*s, y), (x+20*s, y-10*s), (x+10*s, y-10*s), 
+(x, y))
+
+
 while not finish:
 
     for event in pygame.event.get():
@@ -108,7 +118,7 @@ while not finish:
 
 
     screen.fill(WHITE)
-    pygame.draw.polygon(screen, suit_color["hearts"][0], heart)
+    pygame.draw.polygon(screen, suit_color["hearts"][0], nit)
 
 
     # refresh rate
