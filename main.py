@@ -15,14 +15,17 @@ card_ranks['A'] = 11
 card_ranks['a'] = 1
 card_suits = ['clubs', 'diamonds', 'hearts', 'spades']
 suit_color = {
-    'clubs': RED,
-    'diamonds': BLACK,
-    'hearts': (RED,((–10,–15),(–10,–5),(–10,+5),(–10,+15),(0,+15),(+5,+15),(+35,+50),(+35,–50),(+5,–15),(0,–15),(–10,–15),(–10,–5),(–10,+5),(–10,+15))),
-    'spades': BLACK,
+    "clubs": RED,
+    "diamonds": BLACK,
+    "hearts": [RED, ((–10, –15), (–10, –5), (–10, +5), (–10, +15), (0, +15), (+5, +15), (+35, +50), (+35,–50), (+5,–15), (0,–15), (–10, –15),
+(–10, –5), (–10, +5), (–10, +15))],
+    "spades": BLACK
 }
 
 deck = [(i, j) for j in card_suits for i in card_ranks if i != 'a']
 
+
+print(suit_color["hearts"][1])
 
 class GameObject(object):
     """
