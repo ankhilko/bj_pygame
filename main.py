@@ -14,12 +14,18 @@ for i in ('J', 'Q', 'K'):
 card_ranks['A'] = 11
 card_ranks['a'] = 1
 card_suits = ['clubs', 'diamonds', 'hearts', 'spades']
-x, y = 100, 100
+x = 0
+y = 0
+s = 1
+hearts = ((x, y), (x-10*s, y-10*s), (x-20*s, y-10*s), 
+(x-30*s, y), (x-30*s, y+20*s), (x-20*s, y+40*s), 
+(x, y+60*s), (x+20*s, y+40*s), (x+30*s, y+20*s), 
+(x+30*s, y), (x+20*s, y-10*s), (x+10*s, y-10*s), 
+(x, y))
 suit_color = {
     "clubs": RED,
     "diamonds": BLACK,
-    "hearts": [RED, ((x, y), (x-10, y-15), (x-10, y-5), (x-10, y+5), (x-10, y+15), (x+0, y+15), (x+5, y+15), (x+35, y+50),
-                     (x+35, y-50), (x+5, y-15), (x+0, y-15), (x-10, y-15), (x-10, y-5), (x-10, y+5), (x-10, y+15))],
+    "hearts": [RED, hearts],
     "spades": BLACK
 }
 
@@ -94,19 +100,7 @@ clock = pygame.time.Clock()
 finish = False
 
 # shit... now i figured out I need to put coordinates and not vectors ))))
-heart = ((x, y),
-         (x-10, y-15), (x-10, y-5), (x-10, y+5), (x-10, y+15), (x+0, y+15), (x+5, y+15), (x+35, y+50),
-         (x+35, y-50), (x+5, y-15), (x+0, y-15), (x-10, y-15), (x-10, y-5), (x-10, y+5), (x-10, y+15))
 
-
-x = 0
-y = 0
-s = 1
-nit = ((x, y), (x-10*s, y-10*s), (x-20*s, y-10*s), 
-(x-30*s, y), (x-30*s, y+20*s), (x-20*s, y+40*s), 
-(x, y+60*s), (x+20*s, y+40*s), (x+30*s, y+20*s), 
-(x+30*s, y), (x+20*s, y-10*s), (x+10*s, y-10*s), 
-(x, y))
 
 
 while not finish:
@@ -118,7 +112,7 @@ while not finish:
 
 
     screen.fill(WHITE)
-    pygame.draw.polygon(screen, suit_color["hearts"][0], nit)
+    pygame.draw.polygon(screen, suit_color["hearts"][0], hearts)
 
 
     # refresh rate
