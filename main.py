@@ -14,11 +14,12 @@ for i in ('J', 'Q', 'K'):
 card_ranks['A'] = 11
 card_ranks['a'] = 1
 card_suits = ['clubs', 'diamonds', 'hearts', 'spades']
+x, y = 100, 100
 suit_color = {
     "clubs": RED,
     "diamonds": BLACK,
-    "hearts": [RED, ((-10, -15), (-10, -5), (-10, +5), (-10, +15), (0, +15), (+5, +15), (+35, +50),
-                     (+35,-50), (+5,-15), (0,-15), (-10, -15), (-10, -5), (-10, +5), (-10, +15))],
+    "hearts": [RED, ((x, y), (x-10, y-15), (x-10, y-5), (x-10, y+5), (x-10, y+15), (x+0, y+15), (x+5, y+15), (x+35, y+50),
+                     (x+35, y-50), (x+5, y-15), (x+0, y-15), (x-10, y-15), (x-10, y-5), (x-10, y+5), (x-10, y+15))],
     "spades": BLACK
 }
 
@@ -92,13 +93,23 @@ clock = pygame.time.Clock()
 
 finish = False
 
+# shit... now i figured out I need to put coordinates and not vectors ))))
+heart = ((x, y),
+         (x-10, y-15), (x-10, y-5), (x-10, y+5), (x-10, y+15), (x+0, y+15), (x+5, y+15), (x+35, y+50),
+         (x+35, y-50), (x+5, y-15), (x+0, y-15), (x-10, y-15), (x-10, y-5), (x-10, y+5), (x-10, y+15))
+
+
 while not finish:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             finish = True
 
+
+
     screen.fill(WHITE)
+    pygame.draw.polygon(screen, suit_color["hearts"][0], heart)
+
 
     # refresh rate
     pygame.time.Clock().tick(60)
