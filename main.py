@@ -8,86 +8,56 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
+
+def resize(coordinates, size=1):
+    new = []
+    for item in coordinates:
+        new.append(tuple(list(i * size for i in item)))
+    return tuple(new)
+
+
+def place(coordinates, x, y):
+    new = []
+    for item in coordinates:
+        new.append(tuple([item[0] + x, item[1] + y]))
+    return tuple(new)
+
+
+def coor_to_draw(card, x, y):
+    return place(resize(card), x, y)
+
+
 card_ranks = {str(i): i for i in range(2, 11)}
 for i in ('J', 'Q', 'K'):
     card_ranks[i] = 10
 card_ranks['A'] = 11
 card_ranks['a'] = 1
 card_suits = ['clubs', 'diamonds', 'hearts', 'spades']
-x = 0
-y = 0
-s = 1
-hearts = ((x, y), (x-10*s, y-10*s), (x-20*s, y-10*s), 
-(x-30*s, y), (x-30*s, y+20*s), (x-20*s, y+40*s), 
-(x, y+60*s), (x+20*s, y+40*s), (x+30*s, y+20*s), 
-(x+30*s, y), (x+20*s, y-10*s), (x+10*s, y-10*s), 
-(x, y))
+
+suit_shape = {
+    'clubs': (
+        (30, 0), (20, 10), (30, 30), (10, 20), (0, 30), (10, 40), (30, 30),
+        (20, 70), (40, 70), (30, 30), (50, 40), (60, 30), (50, 20), (30, 30), (40, 10)),
+    'diamonds': ((30, 0), (0, 35), (30, 70), (60, 35)),
+    'hearts': ((30, 10), (20, 0), (10, 0), (0, 10), (0, 30), (10, 50),
+               (30, 70), (50, 50), (60, 30), (60, 10), (50, 0), (40, 0)),
+    'spades': ((30, 0), (0, 40), (0, 50), (10, 60), (20, 60), (30, 50),
+               (20, 70), (40, 70), (30, 50), (40, 60), (50, 60), (60, 50), (60, 40))
+}
+
 suit_color = {
-    "clubs": RED,
-    "diamonds": BLACK,
-    "hearts": [RED, hearts],
-    "spades": BLACK
+    'clubs': BLACK,
+    'diamonds': RED,
+    'hearts': RED,
+    'spades': BLACK
 }
 
 deck = [(i, j) for j in card_suits for i in card_ranks if i != 'a']
 
 
-print(suit_color["hearts"][1])
+new_deck = deck.copy()
+random.shuffle(new_deck)
 
-class GameObject(object):
-    """
-    a general class for all objects
-    """
-
-    def __init__(self, x=0, y=0):
-        self.x, self.y = x, y
-        pass
-
-    def draw(self, x, y):
-        # pygame.draw.polygon(screen, suit_color[card.id[1]], ((x, y + 100), (x + 100, y + 100), (x + 100, y), (x, y)))
-        # will make it later
-        pass
-    pass
-
-
-class Deck(GameObject):
-    """return a deck of cards"""
-    global deck
-
-    def __init__(self):
-        super().__init__()
-        self.deck = []
-        self.create_new_deck(deck)
-        pass
-
-    def create_new_deck(self, card_list):
-        self.deck = []
-        for card in card_list:
-            self.deck.append(Card(card))
-        random.shuffle(self.deck)
-        pass
-
-    pass
-
-
-class Card(GameObject):
-    """
-    want to make an object Card
-    13 ranks in four suits: clubs (♧), diamonds (♢), hearts (♥) and spades (♤)
-    """
-
-    def __init__(self, id):
-        super().__init__()
-        self.id = id
-        pass
-
-    pass
-
-
-new_deck = Deck().deck
-
-for i in new_deck:
-    print(i.id)
 
 pygame.init()
 
@@ -112,7 +82,7 @@ while not finish:
 
 
     screen.fill(WHITE)
-    pygame.draw.polygon(screen, suit_color["hearts"][0], hearts)
+    pygame.draw.polygon(screen, suit_color['diamonds'], suit_shape['clubs'])
 
 
     # refresh rate
