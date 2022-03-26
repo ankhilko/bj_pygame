@@ -9,6 +9,12 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
 
+pygame.init()
+screen = pygame.display.set_mode(W_SIZE)
+pygame.display.set_caption("Black Jack in PyGame")
+clock = pygame.time.Clock()
+
+
 def resize(coordinates, size=1):
     new = []
     for item in coordinates:
@@ -16,15 +22,20 @@ def resize(coordinates, size=1):
     return tuple(new)
 
 
-def place(coordinates, x, y):
+def place(coordinates, x=0, y=0):
     new = []
     for item in coordinates:
-        new.append(tuple([item[0] + x, item[1] + y]))
+        new.append(tuple((item[0] + x, item[1] + y)))
     return tuple(new)
 
 
-def coor_to_draw(card, x, y):
-    return place(resize(card), x, y)
+def coor_to_draw(card, x=0, y=0):
+    return place(resize(suit_shape[card]), x, y)
+
+
+def card_draw(card, x, y):
+    global screen
+    pygame.draw.polygon(screen, suit_color[card[1]], coor_to_draw(card[1], x, y))
 
 
 card_ranks = {str(i): i for i in range(2, 11)}
@@ -54,23 +65,11 @@ suit_color = {
 
 deck = [(i, j) for j in card_suits for i in card_ranks if i != 'a']
 
-
 new_deck = deck.copy()
 random.shuffle(new_deck)
 
 
-pygame.init()
-
-screen = pygame.display.set_mode(W_SIZE)
-
-pygame.display.set_caption("Black Jack in PyGame")
-
-clock = pygame.time.Clock()
-
 finish = False
-
-# shit... now i figured out I need to put coordinates and not vectors ))))
-
 
 
 while not finish:
@@ -79,10 +78,10 @@ while not finish:
         if event.type == pygame.QUIT:
             finish = True
 
-
-
     screen.fill(WHITE)
-    pygame.draw.polygon(screen, suit_color['diamonds'], suit_shape['clubs'])
+
+    for i in range(len(new_deck)):
+        card_draw(new_deck[i], random.randint(0, W_SIZE[0]), random.randint(0, W_SIZE[1]))
 
 
     # refresh rate
