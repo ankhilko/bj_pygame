@@ -10,80 +10,22 @@ RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 
 
-pygame.init()
-screen = pygame.display.set_mode(W_SIZE)
-pygame.display.set_caption("Black Jack in PyGame")
-clock = pygame.time.Clock()
-
-
-def draws(color, shapes, size=1, xy=(0, 0)):
-    if type(shapes[0]) == int:
-        pygame.draw.polygon(screen, color,
-                            tuple((shapes[i] * size + xy[0], shapes[i + 1] * size + xy[1])
-                                  for i in range(0, len(shapes), 2)))
-    else:
-        for shape in shapes:
-            pygame.draw.polygon(screen, color,
-                                tuple((shape[i] * size + xy[0], shape[i + 1] * size + xy[1])
-                                      for i in range(0, len(shape), 2)))
-
-
-'''
-def _resize(coordinates, size=1):
-    new = []
-    for item in coordinates:
-        new.append(tuple(list(i * size for i in item)))
-    return tuple(new)
-
-
-def _place(coordinates, x_y=(0, 0)):
-    new = []
-    for item in coordinates:
-        new.append(tuple((item[0] + x_y[0], item[1] + x_y[1])))
-    return tuple(new)
-
-
-def resize(set_of_coor, size=1):
-    temp = []
-    for coor in set_of_coor:
-        temp.append(_resize(coor, size))
-    return tuple(temp)
-
-
-def place(set_of_coor, x_y=(0, 0)):
-    temp = []
-    for coor in set_of_coor:
-        temp.append(_place(coor, x_y))
-    return tuple(temp)
-
-
-def draws(obj_color, obj_coor, outline_width=0):
-    global screen
-    for coor in obj_coor:
-        pygame.draw.polygon(screen, obj_color, coor, outline_width)
-'''
-
-card_ranks = {str(i): i for i in range(2, 11)}
+ranks = {str(i): i for i in range(2, 11)}
 for i in ('J', 'Q', 'K'):
-    card_ranks[i] = 10
-card_ranks['A'] = 11
-card_ranks['a'] = 1
-card_suits = ['clubs', 'diamonds', 'hearts', 'spades']
+    ranks[i] = 10
+ranks['A'] = 11
+ranks['a'] = 1
 
-suit_shape = {
+suits = ['clubs', 'diamonds', 'hearts', 'spades']
+
+shapes = {
     'clubs': [30, 0, 20, 10, 30, 30, 10, 20, 0, 30, 10, 40, 30, 30,
               20, 70, 40, 70, 30, 30, 50, 40, 60, 30, 50, 20, 30, 30, 40, 10],
     'diamonds': [30, 0, 0, 35, 30, 70, 60, 35],
     'hearts': [30, 10, 20, 0, 10, 0, 0, 10, 0, 30, 10, 50,
                30, 70, 50, 50, 60, 30, 60, 10, 50, 0, 40, 0],
     'spades': [30, 0, 0, 40, 0, 50, 10, 60, 20, 60, 30, 50,
-               20, 70, 40, 70, 30, 50, 40, 60, 50, 60, 60, 50, 60, 40]
-}
-
-ind = tuple((suit_shape['clubs'][i], suit_shape['clubs'][i+1]) for i in range(0, len(suit_shape['clubs']), 2))
-print(ind)
-
-rank_shape = {
+               20, 70, 40, 70, 30, 50, 40, 60, 50, 60, 60, 50, 60, 40],
     'A': [14, 0, 0, 50, 10, 50, 12.5, 42, 27.75, 42,
           25, 32, 15, 32, 20, 14, 30, 50, 40, 50, 26, 0],
     'K': [0, 0, 0, 50, 10, 50, 10, 30, 15, 25, 28, 50,
@@ -128,7 +70,64 @@ suit_color = {
     'spades': BLACK
 }
 
-deck = [(i, j) for j in card_suits for i in card_ranks if i != 'a']
+
+pygame.init()
+screen = pygame.display.set_mode(W_SIZE)
+pygame.display.set_caption("Black Jack in PyGame")
+clock = pygame.time.Clock()
+
+
+def draws(color, _shape, size=1, xy=(0, 0)):
+    if type(_shape[0]) == int:
+        pygame.draw.polygon(screen, color,
+                            tuple((_shape[i] * size + xy[0], _shape[i + 1] * size + xy[1])
+                                  for i in range(0, len(_shape), 2)))
+    else:
+        for shape in _shape:
+            pygame.draw.polygon(screen, color,
+                                tuple((shape[i] * size + xy[0], shape[i + 1] * size + xy[1])
+                                      for i in range(0, len(shape), 2)))
+
+
+def draw_obj(obj, size=1, xy=(0, 0)):
+    pass
+
+'''
+def _resize(coordinates, size=1):
+    new = []
+    for item in coordinates:
+        new.append(tuple(list(i * size for i in item)))
+    return tuple(new)
+
+
+def _place(coordinates, x_y=(0, 0)):
+    new = []
+    for item in coordinates:
+        new.append(tuple((item[0] + x_y[0], item[1] + x_y[1])))
+    return tuple(new)
+
+
+def resize(set_of_coor, size=1):
+    temp = []
+    for coor in set_of_coor:
+        temp.append(_resize(coor, size))
+    return tuple(temp)
+
+
+def place(set_of_coor, x_y=(0, 0)):
+    temp = []
+    for coor in set_of_coor:
+        temp.append(_place(coor, x_y))
+    return tuple(temp)
+
+
+def draws(obj_color, obj_coor, outline_width=0):
+    global screen
+    for coor in obj_coor:
+        pygame.draw.polygon(screen, obj_color, coor, outline_width)
+'''
+
+deck = [(i, j) for j in suits for i in ranks if i != 'a']
 
 new_deck = deck.copy()
 random.shuffle(new_deck)
@@ -144,8 +143,8 @@ while not finish:
     screen.fill(WHITE)
 
 
-    draws(BLACK, suit_shape['spades'], 5, (200, 20))
-    draws(BLUE, rank_shape['10'], 5, (400, 20))
+    draws(BLACK, shapes['spades'], 5, (200, 20))
+    draws(BLUE, shapes['10'], 5, (400, 20))
 
 
 
