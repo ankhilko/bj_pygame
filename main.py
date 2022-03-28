@@ -153,6 +153,23 @@ random.shuffle(new_deck)
 
 finish = False
 
+
+
+# start of area for checking the graphics
+
+
+king = {
+'ELLOW': [1, 22, 0, 17, 0, 13, 1, 8, 3, 5, 6, 2, 10, 0, 14, 0, 18, 2, 21, 4, 23, 7, 24, 12, 23, 17, 22, 22], 
+'BLUE': ([14, 22, 7, 1.5, 10, 0, 18, 22], [0, 15, 23, 7, 24, 12, 0.5, 20])
+}
+
+
+
+
+# end of area for checking the graphics
+
+
+
 while not finish:
 
     for event in pygame.event.get():
