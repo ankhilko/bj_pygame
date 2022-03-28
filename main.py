@@ -162,13 +162,17 @@ while not finish:
     screen.fill(WHITE)
 
 
+# start of testing area
+
+
+
     draws(BLACK, shapes['spades'], 5, (200, 20))
     draws(BLUE, shapes['10'], 5, (400, 20))
     draws(RED, shapes['hearts'], 6, (400, 100))
 
 
 
-
+# end of testing area
     # refresh rate
     pygame.time.Clock().tick(60)
     # refresh screen
