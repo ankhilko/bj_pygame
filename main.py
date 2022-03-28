@@ -132,7 +132,7 @@ pygame.display.set_caption("Black Jack in PyGame")
 clock = pygame.time.Clock()
 
 
-def draw_single(color: tuple, _shape: list, size=1, xy=(0, 0)):
+def _draw_single(color: tuple, _shape: list, size=1, xy=(0, 0)):
     pygame.draw.polygon(screen, color,
                         tuple((_shape[i] * size + xy[0], _shape[i + 1] * size + xy[1])
                               for i in range(0, len(_shape), 2)))
@@ -140,10 +140,10 @@ def draw_single(color: tuple, _shape: list, size=1, xy=(0, 0)):
 
 def draws(color: tuple, _shape: list, size=1, xy=(0, 0)):
     if type(_shape[0]) == int:
-        draw_single(color, _shape, size, xy)
+        _draw_single(color, _shape, size, xy)
     else:
         for shape in _shape:
-            draw_single(color, shape, size, xy)
+            _draw_single(color, shape, size, xy)
 
 
 deck = [(i, j) for j in suits for i in ranks if i != 'a']
