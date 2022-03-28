@@ -71,13 +71,30 @@ suit_color = {
 }
 
 
+class GameObject:
+    def __init__(self):
+        self.data = {}
+        pass
+
+    def draw_obj(self, size=1, xy=(0, 0)):
+        pass
+
+
+class Card(GameObject):
+    def __init__(self, suit, rank):
+        super().__init__()
+        self.suit = suit
+        self.rank = rank
+        pass
+
+
 pygame.init()
 screen = pygame.display.set_mode(W_SIZE)
 pygame.display.set_caption("Black Jack in PyGame")
 clock = pygame.time.Clock()
 
 
-def draws(color, _shape, size=1, xy=(0, 0)):
+def draws(color: tuple, _shape: list, size=1, xy=(0, 0)):
     if type(_shape[0]) == int:
         pygame.draw.polygon(screen, color,
                             tuple((_shape[i] * size + xy[0], _shape[i + 1] * size + xy[1])
@@ -88,44 +105,6 @@ def draws(color, _shape, size=1, xy=(0, 0)):
                                 tuple((shape[i] * size + xy[0], shape[i + 1] * size + xy[1])
                                       for i in range(0, len(shape), 2)))
 
-
-def draw_obj(obj, size=1, xy=(0, 0)):
-    pass
-
-'''
-def _resize(coordinates, size=1):
-    new = []
-    for item in coordinates:
-        new.append(tuple(list(i * size for i in item)))
-    return tuple(new)
-
-
-def _place(coordinates, x_y=(0, 0)):
-    new = []
-    for item in coordinates:
-        new.append(tuple((item[0] + x_y[0], item[1] + x_y[1])))
-    return tuple(new)
-
-
-def resize(set_of_coor, size=1):
-    temp = []
-    for coor in set_of_coor:
-        temp.append(_resize(coor, size))
-    return tuple(temp)
-
-
-def place(set_of_coor, x_y=(0, 0)):
-    temp = []
-    for coor in set_of_coor:
-        temp.append(_place(coor, x_y))
-    return tuple(temp)
-
-
-def draws(obj_color, obj_coor, outline_width=0):
-    global screen
-    for coor in obj_coor:
-        pygame.draw.polygon(screen, obj_color, coor, outline_width)
-'''
 
 deck = [(i, j) for j in suits for i in ranks if i != 'a']
 
@@ -147,10 +126,6 @@ while not finish:
     draws(BLUE, shapes['10'], 5, (400, 20))
 
 
-
-
-#    for i in range(len(new_deck)):
-#        card_draw(new_deck[i], random.randint(0, W_SIZE[0]), random.randint(0, W_SIZE[1]))
 
 
     # refresh rate
