@@ -8,7 +8,7 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
-ELLOW = (255, 255, 0)
+YELLOW = (255, 255, 0)
 
 
 ranks = {str(i): i for i in range(2, 11)}
@@ -110,6 +110,24 @@ graphics = {
 }
 
 
+# start of area for checking the graphics
+
+
+king = {
+'YELLOW': [1, 22, 0, 17, 0, 13, 1, 8, 3, 5, 6, 2, 10, 0, 14, 0, 18, 2, 21, 4, 23, 7, 24, 11, 23, 17, 22.5, 20, 22, 22],
+'BLUE': ([14, 22, 7, 1.5, 10, 0, 18, 22], [0, 15, 23, 7, 24, 12, 0.5, 20])
+}
+
+new_test = [9,0 , 5,4 , 3,8 , 3,10 , 4,12 , 5,13 , 7,14 , 8,14 , 10,13 , 11,12 , 12,13 , 14,14 , 15,14 , 17,13 , 18,12 , 19,10 , 19,8 , 17,4 , 13,0]
+
+
+new_test_2 = ([14,8, 11,8, 12,7, 12,6, 11,4, 8,1, 7,1, 6,3, 6,7, 4,7, 4,8, 6,10, 5,12, 5,16, 15,16, 15,11, 16,10, 18,10, 19,9, 19,7, 18,6, 16,6, 14,8, 14,15, 13,16],
+[15,17, 15,18, 16,20, 14,18, 14,20, 13,18, 13,20, 12,18, 12,20, 11,18, 11,20, 10,18, 9,20, 9,18, 8,20, 8,18, 7,20, 7,18, 6,20, 6,18, 4,20, 5,18, 5,17, 15,17])
+
+
+# end of area for checking the graphics
+
+
 class GameObject:
     def __init__(self):
         self.data = {}
@@ -127,55 +145,30 @@ class Card(GameObject):
         pass
 
 
-pygame.init()
-screen = pygame.display.set_mode(W_SIZE)
-pygame.display.set_caption("Black Jack in PyGame")
-clock = pygame.time.Clock()
-
-
-def _draw_single(color: tuple, _shape: list, size=1.0, xy=(0, 0)):
+def _draw_single(screen, color: tuple, _shape: list, size=1.0, xy=(0, 0)):
     pygame.draw.polygon(screen, color,
                         tuple((_shape[i] * size + xy[0], _shape[i + 1] * size + xy[1])
                               for i in range(0, len(_shape), 2)))
 
 
-def draws(color: tuple, _shape: list, size=1.0, xy=(0, 0)):
+def draws(screen, color: tuple, _shape: list, size=1.0, xy=(0, 0)):
     if type(_shape[0]) == (int or float):
-        _draw_single(color, _shape, size, xy)
+        _draw_single(screen, color, _shape, size, xy)
     else:
         for shape in _shape:
-            _draw_single(color, shape, size, xy)
+            _draw_single(screen, color, shape, size, xy)
 
 
+pygame.init()
+screen = pygame.display.set_mode(W_SIZE)
+pygame.display.set_caption("Black Jack in PyGame")
+clock = pygame.time.Clock()
 deck = [(i, j) for j in suits for i in ranks if i != 'a']
 
 new_deck = deck.copy()
 random.shuffle(new_deck)
 
 finish = False
-
-
-
-# start of area for checking the graphics
-
-
-king = {
-'ELLOW': [1, 22, 0, 17, 0, 13, 1, 8, 3, 5, 6, 2, 10, 0, 14, 0, 18, 2, 21, 4, 23, 7, 24, 11, 23, 17, 22.5, 20, 22, 22],
-'BLUE': ([14, 22, 7, 1.5, 10, 0, 18, 22], [0, 15, 23, 7, 24, 12, 0.5, 20])
-}
-
-new_test = [9,0 , 5,4 , 3,8 , 3,10 , 4,12 , 5,13 , 7,14 , 8,14 , 10,13 , 11,12 , 12,13 , 14,14 , 15,14 , 17,13 , 18,12 , 19,10 , 19,8 , 17,4 , 13,0]
-
-
-new_test_2 = ([14,8, 11,8, 12,7, 12,6, 11,4, 8,1, 7,1, 6,3, 6,7, 4,7, 4,8, 6,10, 5,12, 5,16, 15,16, 15,11, 16,10, 18,10, 19,9, 19,7, 18,6, 16,6, 14,8, 14,15, 13,16],
-[15,17, 15,18, 16,20, 14,18, 14,20, 13,18, 13,20, 12,18, 12,20, 11,18, 11,20, 10,18, 9,20, 9,18, 8,20, 8,18, 7,20, 7,18, 6,20, 6,18, 4,20, 5,18, 5,17, 15,17])
-
-
-
-
-# end of area for checking the graphics
-
-
 
 while not finish:
 
@@ -185,19 +178,16 @@ while not finish:
 
     screen.fill(WHITE)
 
+    # start of testing area
 
-# start of testing area
+    draws(screen, YELLOW, king['YELLOW'], 5, (200, 20))
+    draws(screen, BLUE, new_test_2, 10, (200, 200))
 
-
-
-    draws(ELLOW, king['ELLOW'], 5, (200, 20))
-    draws(BLUE, new_test_2, 10, (200, 200))
-
-
-# end of testing area
+    # end of testing area
     # refresh rate
     pygame.time.Clock().tick(60)
     # refresh screen
     pygame.display.flip()
+
 
 
