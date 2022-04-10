@@ -21,7 +21,7 @@ ranks['a'] = 1
 suits = ['clubs', 'diamonds', 'hearts', 'spades']
 
 shapes = {
-    'card': [0, 0, 0, 580, 360, 580, 360, 0],
+    'card': [0, 0, 0, 580, 380, 580, 380, 0],
     'clubs': [30, 0, 20, 10, 30, 30, 10, 20, 0, 30, 10, 40, 30, 30,
               20, 70, 40, 70, 30, 30, 50, 40, 60, 30, 50, 20, 30, 30, 40, 10],
     'diamonds': [30, 0, 0, 35, 30, 70, 60, 35],
@@ -172,6 +172,12 @@ def draws(screen, color: tuple, _shape: list, size=1.0, xy=(0, 0)):
     else:
         for shape in _shape:
             _draw_single(screen, color, shape, size, xy)
+
+
+def draw_card(screen, shapes_list, xy=(0, 0)):
+    for item in shapes_list:
+        # item: (color, shape, size, coor_xy)
+        draws(screen, item[0], item[1], item[2], item[3])
 
 
 pygame.init()
